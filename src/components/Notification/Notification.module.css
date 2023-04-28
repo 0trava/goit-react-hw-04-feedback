@@ -1,0 +1,7 @@
+.notification > .notification_title{
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 30px;
+  }

@@ -1,0 +1,9 @@
+.section_title{
+    display: flex;
+    justify-content: center;
+    font-size: 2em;
+    margin-top: 1rem;
+    font-weight: 900;
+
+    margin-bottom: 60px;
+}
