@@ -17,6 +17,7 @@ export const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+  let visible = false;
 
 
     // BUTTON - команди при click (good, bad, neutral  )
@@ -38,13 +39,11 @@ export const App = () => {
     return Math.floor((good / (good + neutral + bad)) * 100 || 0);
   }
 
-// РЕНДНЕРІНГ сторінки
-
-    let visible = false;
-
+// Перевірка чи є введені значення
     if (good+neutral+bad > 0) { visible = true;}
     else {visible = false; };
 
+// РЕНДНЕРІНГ сторінки
     return (
       <div className={css.container}>
         <div className={css.card}>
