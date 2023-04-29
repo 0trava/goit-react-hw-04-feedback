@@ -1,5 +1,4 @@
-import {Component} from 'react';
-
+import { useState } from 'react'; // підключення Хук для стану
 import Section from './Section/Section';// підключення секції Section
 import Statistics from './Statistics/Statistics'; // підключення секції Statistics
 import FeedbackOptions from './FeedbackOptions/FeedbackOptions'; // підключення секції FeedbackOptions
@@ -10,54 +9,37 @@ import css from "./App.module.css";// підключення стилів на �
 
 
 
-class App extends Component {
+export const App = () => {
 
   // !!! ОБОВ'ЯЗКОВО 
   // (Стан застосунку повинен бути наступного вигляду, 
   // додавати нові властивості не можна)
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0
-  }
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
 
     // BUTTON - команди при click (good, bad, neutral  )
     // Додавання обов'язково робимо через функцію, з поверненням стану
-   clickBtn = (evt) => {
-
-
-      if (evt.target.name === "good"){
-        this.setState((prevState) => {
-          return {good: prevState.good + 1,}  
-        });
-      } else if (evt.target.name === "bad"){
-        this.setState((prevState) => {
-          return {bad: prevState.bad + 1,}  
-        });
-      } else {
-        this.setState((prevState) => {
-          return {neutral: prevState.neutral + 1, }  
-        });
-      }      
+  const clickBtn = (evt) => {
+    const name = evt.target.name;
+    if (name === 'good') setGood(prev => prev + 1);
+    if (name === 'neutral') setNeutral(prev => prev + 1);
+    if (name === 'bad') setBad(prev => prev + 1);    
   }
   
-  countTotalFeedback = () => {
-    const { good, neutral, bad } = this.state;
+  // підрахунок загальної кількості відгуків
+  const countTotalFeedback = () => {
     return good + neutral + bad;
   };
 
-  countPositiveFeedbackPercentage = () => {
-    const { good, neutral, bad } = this.state;
-    let count = Math.round((good * 100) / (good + neutral + bad));
-    if (!count){count = 0} ;
-    return count;
+// підрахунок відсотка позитивних відгуків
+  const countPositiveFeedbackPercentage = () => {
+    return Math.floor((good / (good + neutral + bad)) * 100 || 0);
   }
 
 // РЕНДНЕРІНГ сторінки
-  render () {
-    // Змінні для роботи
-    const { good, neutral, bad } = this.state;
+
     let visible = false;
 
     if (good+neutral+bad > 0) { visible = true;}
@@ -67,7 +49,7 @@ class App extends Component {
       <div className={css.container}>
         <div className={css.card}>
             <Section title="Please leave feedback">
-              <FeedbackOptions clickBtn={this.clickBtn}/>
+              <FeedbackOptions clickBtn={clickBtn}/>
             </Section>
             
             <Section title="Statistics">
@@ -75,7 +57,7 @@ class App extends Component {
                 <Notification message={"There is no feedback"}></Notification>
               )}
               { visible && (
-                <Statistics good={good} neutral={neutral} bad={bad} countTotalFeedback={this.countTotalFeedback()} countPositiveFeedbackPercentage={this.countPositiveFeedbackPercentage()}/>
+                <Statistics good={good} neutral={neutral} bad={bad} countTotalFeedback={countTotalFeedback()} countPositiveFeedbackPercentage={countPositiveFeedbackPercentage()}/>
               )}
               
             </Section>
@@ -83,6 +65,3 @@ class App extends Component {
       </div>
     );
   }
-}
-
-export default App;

@@ -1,12 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from 'components/App';
-import './index.css';
+import ReactDOM from 'react-dom/client'; //бібліотека, яка надає методи для рендерингу
+import { App } from 'components/App';
+import './index.css'; // стилізація
 
-ReactDOM.render(
+// отримуємо корінь додатку + рендер
+ReactDOM.createRoot(document.getElementById('root')).render(
+
+// використовуємо строгий режим
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
